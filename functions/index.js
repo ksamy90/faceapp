@@ -3,14 +3,10 @@ const admin = require('firebase-admin');
 
 admin.initializeApp();
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-exports.helloWorld = functions.https.onRequest((request, response) => {
- response.send("Hello from Firebase!");
-});
+const express = require('express');
+const app = express();
 
-exports.getScreams = functions.https.onRequest((req, res) => {
+app.get('/screams', (req, res) => {
     admin.firestore()
         .collection('screams').get()
         .then(data => {
@@ -43,3 +39,5 @@ exports.createScream = functions.https.onRequest((req, res) => {
             res.status(500).json({ error: 'something went wrong' });
         });
 });
+
+exports.api = functions.https.onRequest(app);
