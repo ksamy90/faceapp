@@ -19,10 +19,7 @@ app.get('/screams', (req, res) => {
         .catch(err => console.log(err));
 });
 
-exports.createScream = functions.https.onRequest((req, res) => {
-    if (req.method !== 'POST') {
-        return res.status(400).json({ error: 'Method not allowed' });
-    }
+app.post('/scream', (req, res) => {
     const newScream = {
         body: req.body.body,
         userHandle: req.body.userHandle,
